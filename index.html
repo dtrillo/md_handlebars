@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+
+	<title>Manejando datos - HandleBarsJS templates example</title>
+
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+
+	<script src="js/handlebars-v3.0.3.js"></script>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+		
+<script type="text/x-handlebars-template" id="template-dato">
+	<div class="container">
+			<h1>{{Name}}</h1>
+			<div class="col-md-12">Brewery: <span class="label label-success">{{Brewery}}</span></div>
+			<div class="col-md-12">Estilo: <span class="label label-info">{{Style}}</span> - Graduaci&oacute;n: <span class="label label-danger">{{Abv}}</span></div>
+	</div>
+</script>
+
+	
+<script type="text/x-handlebars-template" id="template-listado">
+	<ul id="listado" class="list-group">
+			<li class="list-group-item list-group-item-info">
+				<h3 class="list-group-item-header">Cervezas</h3>
+			</li>
+		{{# each Beers}}
+			<li class="list-group-item"><a>{{Name}}</a></li>
+		{{/each}}
+	</ul>
+</script>
+
+</head>
+
+<body>
+	<div class="container jumbotron">
+		<h1 class="text-center">MD y Handlebars</h1>
+	</div>
+	
+	<div class="container">
+		<div class="col-md-3">
+			<button id="carga" class="btn btn-success">Cargar datos</button>
+		</div>
+		<div class="col-md-3" id="content">
+		</div>
+		<div class="col-md-3" id="masdatos">
+			<strong>Sin selecci&oacute;n ...</strong><br/>
+		</div>
+	</div>
+
+<script type="text/javascript">
+$(function() {
+	var stemplate = $("#template-listado").html();
+	var tmpl = Handlebars.compile(stemplate);
+	var sdato = $("#template-dato").html();
+	var tmpldato = Handlebars.compile(sdato);
+	var ctx = {};
+	var masdatos = $('#masdatos');
+	
+	$('#carga').on('click', function (e) {
+		$.getJSON( 'beers.json',  { format: "json"}	)
+		.done(
+			function (data) {
+				console.log(data);
+				ctx.Beers = data;
+				var html = tmpl(ctx);
+				$("#content").html(html).show();
+				refresca();
+			}
+		);
+	});
+	var refresca = function  () {
+		$('#listado').find('li').on('click', function (e) {
+					$this = $(this);
+					var seleccion = $this.text();
+					var beer; var nombre = '';
+					for (index = 0; index < ctx.Beers.length; ++index)
+						{ beer = ctx.Beers[index];
+						if (beer.Name == seleccion) {
+								var html = tmpldato(beer);
+								masdatos.html(html)
+								break;
+							}	
+						}
+		});
+	}
+});
+</script>
+
+</body>
+</html>

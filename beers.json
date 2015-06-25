@@ -1,0 +1,34 @@
+[
+    {
+        "Name": "Estrella",
+        "Brewery": "Damm",
+        "Style": "Euro Lager",
+        "Abv": "5.4",
+        "Ibu": "25",
+        "Favorite": false
+    },
+    {
+        "Name": "Voll Damm",
+        "Brewery": "Damm",
+        "Style": "Bock",
+        "Abv": "7.2",
+        "Ibu": "40",
+        "Favorite": false
+    },
+    {
+        "Name": "Devil's",
+        "Brewery": "Marina",
+        "Style": "Indian Pale Ale",
+        "Abv": "9.0",
+        "Ibu": "150",
+        "Favorite": true
+    },
+    {
+        "Name": "Guinness Draught",
+        "Brewery": "Guinness",
+        "Style": "Irish Stout",
+        "Abv": "4.5",
+        "Ibu": "40",
+        "Favorite": true
+    }
+]
